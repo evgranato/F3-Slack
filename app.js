@@ -169,24 +169,6 @@ let options = {
     });
   }
 
-//THIRD OPTION:
-// web.files.list({}, function(err, fileListResp) {
-//     if (err)
-//       return console.log(err);
-  
-//     // Strategically choose a file to download.
-//     let filePrivateUrl = fileListResp.files[Math.floor(
-//       Math.random() * fileListResp.files.length)].url_private;
-  
-//     // If you don't want to write the returned data to a file then just remove the
-//     // `pipe` call and supply `request` with a callback.
-//     request({
-//       url: filePrivateUrl,
-//       headers: {
-//         'Authorization': 'Bearer' + 'xapp-1-A034S19FG3C-3171823127540-1058d45ccaa5f4903ca0893d686be317e286abfdcd5c88ccb039fff12184ab44'
-//       }
-//     }).pipe(fs.createWriteStream('/pics'));
-//   });
 
 // //TWEET CONTENT RETURNED IN SLACK MESSAGE
 // app.message('what', async({message, say}) => {
