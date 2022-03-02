@@ -3,17 +3,8 @@ const channelId = 'C034SSKHQ30'
 const Twit = require("twit");
 const fs = require("fs")
 const dotenv = require("dotenv").config({path: '/Users/evgranato/Documents/Coding/Slack Keys/keys.env'});
-const Stream = require('stream').Transform;
 const http = require('http')
 const https = require('https')
-const request = require('request');
-const WebClient = require('@slack/client').WebClient;
-
-const web = new WebClient({
-    token: process.env.SLACK_BOT_TOKEN,
-    signingSecret: process.env.SLACK_SIGNING_SECRET,
-    appToken: process.env.SLACK_APP_TOKEN,
-});
 
 // Initializes your app with your bot token and signing secret
 const app = new App({
@@ -117,29 +108,6 @@ return post1
 
 //DOWNLOAD IMAGE
 
-//FIRST OPTION:
-//Download Image Helper Function
-// let downloadImageFromURL = (url, filename, callback) => {
-
-//     let client = http;
-//     if (url.toString().indexOf("https") === 0) {
-//         client = https;
-//     }
-        
-//     client.request(url, function(response) {
-//         let data = new Stream();
-        
-//         response.on('data', function(chunk) {
-//             data.push(chunk);
-//         });
-
-//         response.on('end', function() {
-//             fs.writeFileSync(filename, data.read());
-//         });
-//     }).end();
-// };
-
-//SECOND OPTION:
 function pDownload(url, dest){
 let options = {
     "method": "GET",
