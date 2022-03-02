@@ -2,7 +2,7 @@ const { App } = require('@slack/bolt');
 const channelId = 'C034SSKHQ30'
 const Twit = require("twit");
 const fs = require("fs")
-const dotenv = require("dotenv").config({path: '/Users/evgranato/Documents/Coding/F3 Slack/keys.env'});
+const dotenv = require("dotenv").config({path: '/Users/evgranato/Documents/Coding/Slack Keys/keys.env'});
 const Stream = require('stream').Transform;
 const http = require('http')
 const https = require('https')
@@ -80,17 +80,20 @@ function tweet(files, todaySocial) {
 //CONNECT SLACK AND MESSAGE
 app.message(/PAX/, async ({message, say}) =>
 {await say(`Thanks <@${message.user}>! I'll add that to today's social media content`)
-todaySocial.push(message.text)
-let url = message.files[0].url_private
-console.log(url)
-let filePath = 'pics/' + Math.random() + '.jpeg'
-console.log(filePath)
-pDownload(url, filePath)
-files.push(filePath)
-console.log(todaySocial)
-console.log(files)
-// console.log(Array.isArray(files))
-});
+if ("undefined" === typeof (message.files)) {
+    todaySocial.push(message.text)
+    console.log(todaySocial)
+} else {
+    todaySocial.push(message.text)
+    console.log(todaySocial)
+    let url = message.files[0].url_private
+    console.log(url)
+    let filePath = 'pics/' + Math.random() + '.jpeg'
+    pDownload(url, filePath)
+    files.push(filePath)
+    console.log(filePath)
+    console.log(files)
+}});
 
 //RESET DAILY AND TWEET
 setTimeout(()=> {
@@ -99,7 +102,7 @@ setTimeout(()=> {
     post = ''
     files = []
     console.log('Reset Variables')
-}, 120000);
+}, 86400000);
 
 //PUT A FULL DAILY TWEET TOGETHER
 function completeMessage() {
