@@ -92,8 +92,8 @@ setTimeout(()=> {
     todaySocial = []
     post = ''
     files = []
-    console.log('Reset Variables')
-}, 60000);
+    console.log('Daily Reset')
+}, 86400000);
 
 //PUT A FULL DAILY TWEET TOGETHER
 function completeMessage() {
