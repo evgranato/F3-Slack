@@ -5,6 +5,8 @@ const fs = require("fs")
 const dotenv = require("dotenv").config({path: '/Users/evgranato/Documents/Coding/Slack Keys/keys.env'});
 const http = require('http')
 const https = require('https')
+// const FB = require('fb')
+// const facebookToken = process.env.FACEBOOK_ACCESS
 
 // Initializes your app with your bot token and signing secret
 const app = new App({
@@ -22,11 +24,13 @@ const T = new Twit({
     access_token: process.env.ACCESS_TOKEN,
     access_token_secret: process.env.ACCESS_TOKEN_SECRET,
   });
+
 //DECLARE DAILY VARIABLES
 let todaySocial = []
 let post = ''
 let files = []
 
+//TWEET TEXT AND PHOTOS
 function tweet(files, todaySocial) {
     let mediaIds = new Array();
     files.forEach(function(file, index) { 
@@ -67,6 +71,21 @@ function tweet(files, todaySocial) {
       }
     });
   }
+
+//FACEBOOK CONNECTION
+// FB.setAccessToken(facebookToken);
+// FB.api(
+//  '/sentifly/feed',
+//  'POST',
+//  { "message": "Testing with api" },
+//  function (response) {
+//   if (response.error) {
+//    console.log('error occurred: ' + JSON.stringify(response.error))
+//    return;
+//   }
+//   console.log('successfully posted to page!');
+//  }
+// );
 
 //CONNECT SLACK AND MESSAGE
 app.message(/PAX/, async ({message, say}) =>
