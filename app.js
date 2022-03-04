@@ -93,17 +93,19 @@ setTimeout(()=> {
     post = ''
     files = []
     console.log('Reset Variables')
-}, 86400000);
+}, 60000);
 
 //PUT A FULL DAILY TWEET TOGETHER
 function completeMessage() {
-for(let i = 0; i < todaySocial.length; i++) {
-    post = post + ", " + todaySocial[i]
-}
-let post1 = post.substring(2)
-post1 = post1 + ' #F3NATION #AustinTx #Austin #atx #texas'
-console.log(post1) 
-return post1
+    for(let i = 0; i < todaySocial.length; i++) {
+        post = post + ", " + todaySocial[i]
+    }
+    let post1 = post.substring(2)
+    if(post1.length < 245) {
+        post1 = post1 + ' #F3NATION #AustinTx #Austin #atx #texas'
+    } 
+    console.log(post1) 
+    return post1
 };
 
 //DOWNLOAD IMAGE
