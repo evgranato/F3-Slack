@@ -113,7 +113,7 @@ setTimeout(()=> {
     deleteImageFiles(files)
     files = []
     console.log('Daily Reset')
-}, 120000);
+}, 86400000);
 
 //PUT A FULL DAILY TWEET TOGETHER
 function completeMessage() {
