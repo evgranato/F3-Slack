@@ -110,9 +110,10 @@ setTimeout(()=> {
     tweet(files, completeMessage());
     todaySocial = []
     post = ''
+    deleteImageFiles(files)
     files = []
     console.log('Daily Reset')
-}, 86400000);
+}, 120000);
 
 //PUT A FULL DAILY TWEET TOGETHER
 function completeMessage() {
@@ -159,6 +160,18 @@ let options = {
           reject(err);
       });
     });
+  }
+
+  //DELETE DOWNLOADED IMAGES
+  function deleteImageFiles (imageFiles) {
+      for(let i =0; i < imageFiles.length; i++) {
+        fs.unlink(imageFiles[i], function (err) {            
+            if (err) {                                                 
+                console.error(err);                                    
+            }                                                          
+           console.log('File has been Deleted');                           
+        });                        
+      }
   }
 
 
