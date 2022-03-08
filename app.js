@@ -94,15 +94,29 @@ if ("undefined" === typeof (message.files)) {
     todaySocial.push(message.text)
     console.log(todaySocial)
 } else {
-    todaySocial.push(message.text)
-    console.log(todaySocial)
-    let url = message.files[0].url_private
-    console.log(url)
-    let filePath = 'pics/' + Math.random() + '.jpeg'
-    pDownload(url, filePath)
-    files.push(filePath)
-    console.log(filePath)
-    console.log(files)
+    if(message.text.search('<#') === -1) {
+        todaySocial.push(message.text)
+        console.log(todaySocial)
+        let url = message.files[0].url_private
+        let filePath = 'pics/' + Math.random() + '.jpeg'
+        pDownload(url, filePath)
+        files.push(filePath)
+        console.log(filePath)
+        console.log(files)
+    } else {
+        let splitMsg = message.text.split("-")
+        let tag = splitMsg.slice(-1)[0].slice(0,-1)
+        let firstLine = message.text.split('<')[0]
+        todaySocial.push(`${firstLine}#${tag}`)
+        console.log(todaySocial)
+        let url = message.files[0].url_private
+        let filePath = 'pics/' + Math.random() + '.jpeg'
+        pDownload(url, filePath)
+        files.push(filePath)
+        console.log(filePath)
+        console.log(files)
+    }
+    
 }});
 
 //RESET DAILY AND TWEET
