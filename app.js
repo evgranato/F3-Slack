@@ -94,7 +94,7 @@ if ("undefined" === typeof (message.files)) {
   let splitMsg = message.text.split("ao-")
   let tag = splitMsg.slice(-1)[0].slice(0,-1)
   let firstLine = message.text.split('<')[0]
-  todaySocial.push(`${firstLine}#${tag}`)
+  todaySocial.push(`${firstLine.replace('&amp;', '&')}#${tag}`)
   console.log(todaySocial)
 } else {
     if(message.text.search('<#') === -1) {
@@ -110,7 +110,7 @@ if ("undefined" === typeof (message.files)) {
         let splitMsg = message.text.split("ao-")
         let tag = splitMsg.slice(-1)[0].slice(0,-1)
         let firstLine = message.text.split('<')[0]
-        todaySocial.push(`${firstLine}#${tag}`)
+        todaySocial.push(`${firstLine.replace('&amp;', '&')}#${tag}`)
         console.log(todaySocial)
         let url = message.files[0].url_private
         let filePath = 'pics/' + Math.random() + '.jpeg'
