@@ -98,7 +98,7 @@ if ("undefined" === typeof (message.files)) {
   console.log(todaySocial)
 } else {
     if(message.text.search('<#') === -1) {
-        todaySocial.push(message.text)
+        todaySocial.push(message.text.replace('&amp;', '&'))
         console.log(todaySocial)
         let url = message.files[0].url_private
         let filePath = 'pics/' + Math.random() + '.jpeg'
