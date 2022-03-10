@@ -93,11 +93,16 @@ function tweet(files, todaySocial) {
 app.message(/PAX/, async ({message, say}) =>
 {await say(`Thanks <@${message.user}>! I'll add that to today's social media content`)
 if ("undefined" === typeof (message.files)) {
-  let splitMsg = message.text.split("ao-")
-  let tag = splitMsg.slice(-1)[0].slice(0,-1)
-  let firstLine = message.text.split('<')[0]
-  todaySocial.push(`${firstLine.replace('&amp;', '&')}#${tag}`)
-  myConsole.log(todaySocial, new Date().toLocaleString())
+  if(message.text.search('<#') === -1) {
+    todaySocial.push(message.text)
+    myConsole.log(todaySocial, new Date().toLocaleString())
+  } else {
+    let splitMsg = message.text.split("ao-")
+    let tag = splitMsg.slice(-1)[0].slice(0,-1)
+    let firstLine = message.text.split('<')[0]
+    todaySocial.push(`${firstLine.replace('&amp;', '&')}#${tag}`)
+    myConsole.log(todaySocial, new Date().toLocaleString())
+  }
 } else {
     if(message.text.search('<#') === -1) {
         todaySocial.push(message.text.replace('&amp;', '&'))
