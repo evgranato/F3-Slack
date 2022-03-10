@@ -2,9 +2,11 @@ const { App } = require('@slack/bolt');
 const channelId = 'C034SSKHQ30'
 const Twit = require("twit");
 const fs = require("fs")
-const dotenv = require("dotenv").config({path: '/Users/evgranato/Documents/Coding/Slack Keys/keys.env'});
+const dotenv = require("dotenv").config({path: './keys.env'});
 const http = require('http')
 const https = require('https')
+//LOGGER FILE
+const myConsole = new console.Console(fs.createWriteStream('./output.txt'));
 // const FB = require('fb')
 // const facebookToken = process.env.FACEBOOK_ACCESS
 
@@ -49,7 +51,7 @@ function tweet(files, todaySocial) {
         let mediaId = data.media_id_string;
         callback(mediaId);
       } else {
-        console.log(`Error occured uploading content\t${err}`);
+        mymyConsole.log(`Error occured uploading content\t${err}`, new Date().toLocaleString());
         process.exit(-1);
       }
     });
@@ -62,11 +64,11 @@ function tweet(files, todaySocial) {
         let params = { status: todaySocial, media_ids: mediaIds};
         T.post('statuses/update', params, function (err, data, response) {
           if (err) {
-            console.log(`Error occured updating status\t${err}`);
+            myConsole.log(`Error occured updating status\t${err}`, new Date().toLocaleString());
           }
         });
       } else {
-        console.log(`Error creating metadata\t${err}`);
+        myConsole.log(`Error creating metadata\t${err}`, new Date().toLocaleString());
         process.exit(-1);
       }
     });
@@ -80,10 +82,10 @@ function tweet(files, todaySocial) {
 //  { "message": "Testing with api" },
 //  function (response) {
 //   if (response.error) {
-//    console.log('error occurred: ' + JSON.stringify(response.error))
+//    myConsole.log('error occurred: ' + JSON.stringify(response.error))
 //    return;
 //   }
-//   console.log('successfully posted to page!');
+//   myConsole.log('successfully posted to page!');
 //  }
 // );
 
@@ -95,29 +97,29 @@ if ("undefined" === typeof (message.files)) {
   let tag = splitMsg.slice(-1)[0].slice(0,-1)
   let firstLine = message.text.split('<')[0]
   todaySocial.push(`${firstLine.replace('&amp;', '&')}#${tag}`)
-  console.log(todaySocial)
+  myConsole.log(todaySocial, new Date().toLocaleString())
 } else {
     if(message.text.search('<#') === -1) {
         todaySocial.push(message.text.replace('&amp;', '&'))
-        console.log(todaySocial)
+        myConsole.log(todaySocial, new Date().toLocaleString())
         let url = message.files[0].url_private
         let filePath = 'pics/' + Math.random() + '.jpeg'
         pDownload(url, filePath)
         files.push(filePath)
-        console.log(filePath)
-        console.log(files)
+        myConsole.log(filePath, new Date().toLocaleString())
+        myConsole.log(files, new Date().toLocaleString())
     } else {
         let splitMsg = message.text.split("ao-")
         let tag = splitMsg.slice(-1)[0].slice(0,-1)
         let firstLine = message.text.split('<')[0]
         todaySocial.push(`${firstLine.replace('&amp;', '&')}#${tag}`)
-        console.log(todaySocial)
+        myConsole.log(todaySocial, new Date().toLocaleString())
         let url = message.files[0].url_private
         let filePath = 'pics/' + Math.random() + '.jpeg'
         pDownload(url, filePath)
         files.push(filePath)
-        console.log(filePath)
-        console.log(files)
+        myConsole.log(filePath, new Date().toLocaleString())
+        myConsole.log(files, new Date().toLocaleString())
     }
     
 }});
@@ -129,7 +131,7 @@ setTimeout(()=> {
     post = ''
     deleteImageFiles(files)
     files = []
-    console.log('Daily Reset')
+    myConsole.log('Daily Reset', new Date().toLocaleString())
 }, 86400000);
 
 //PUT A FULL DAILY TWEET TOGETHER
@@ -141,7 +143,7 @@ function completeMessage() {
     if(post1.length < 245) {
         post1 = post1 + ' #F3NATION #AustinTx #Austin #atx #texas'
     } 
-    console.log(post1) 
+    myConsole.log(post1, new Date().toLocaleString()) 
     return post1
 };
 
@@ -186,7 +188,7 @@ let options = {
             if (err) {                                                 
                 console.error(err);                                    
             }                                                          
-           console.log('File has been Deleted');                           
+           myConsole.log('File has been Deleted', new Date().toLocaleString());                           
         });                        
       }
   }
@@ -202,5 +204,6 @@ let options = {
   // Start your app
   await app.start();
 
-  console.log('⚡️ Bolt app is running!');
+  myConsole.log('⚡️ Bolt app is running!', new Date().toLocaleString());
+  console.log('⚡️ Bolt app is running!')
 })();
