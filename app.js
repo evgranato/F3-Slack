@@ -8,7 +8,7 @@ const https = require('https')
 // const FB = require('fb')
 // const facebookToken = process.env.FACEBOOK_ACCESS
 
-// Initializes your app with your bot token and signing secret
+// INITIALIZES BOT APP
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
   signingSecret: process.env.SLACK_SIGNING_SECRET,
