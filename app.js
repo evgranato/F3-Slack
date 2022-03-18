@@ -101,17 +101,10 @@ if ("undefined" === typeof (message.files)) {
   } else {
     let splitMsg = message.text.split("ao-")
     if(endSpace.test(splitMsg) === true) {
-      let tag = splitMsg.slice(-1)[0].slice(0,-2)
-      let firstLine = message.text.split('<')[0]
-      todaySocial.push(`${firstLine.replace('&amp;', '&')}#${tag}`)
-      myConsole.log(todaySocial, new Date().toLocaleString())
+      sliceWithSpace(splitMsg)
     } else {
-      let tag = splitMsg.slice(-1)[0].slice(0,-1)
-      let firstLine = message.text.split('<')[0]
-      todaySocial.push(`${firstLine.replace('&amp;', '&')}#${tag}`)
-      myConsole.log(todaySocial, new Date().toLocaleString())
+      sliceNoSpace(splitMsg)
     }
-    
   }
 } else {
     if(message.text.search('<#') === -1) {
@@ -126,10 +119,7 @@ if ("undefined" === typeof (message.files)) {
     } else {
         let splitMsg = message.text.split("ao-")
         if(endSpace.test(splitMsg) === true) {
-          let tag = splitMsg.slice(-1)[0].slice(0,-2)
-          let firstLine = message.text.split('<')[0]
-          todaySocial.push(`${firstLine.replace('&amp;', '&')}#${tag}`)
-          myConsole.log(todaySocial, new Date().toLocaleString())
+          sliceWithSpace(splitMsg)
           let url = message.files[0].url_private
           let filePath = 'pics/' + Math.random() + '.jpeg'
           pDownload(url, filePath)
@@ -137,10 +127,7 @@ if ("undefined" === typeof (message.files)) {
           myConsole.log(filePath, new Date().toLocaleString())
           myConsole.log(files, new Date().toLocaleString())
         } else {
-            let tag = splitMsg.slice(-1)[0].slice(0,-1)
-            let firstLine = message.text.split('<')[0]
-            todaySocial.push(`${firstLine.replace('&amp;', '&')}#${tag}`)
-            myConsole.log(todaySocial, new Date().toLocaleString())
+          sliceNoSpace(splitMsg)
             let url = message.files[0].url_private
             let filePath = 'pics/' + Math.random() + '.jpeg'
             pDownload(url, filePath)
@@ -148,9 +135,7 @@ if ("undefined" === typeof (message.files)) {
             myConsole.log(filePath, new Date().toLocaleString())
             myConsole.log(files, new Date().toLocaleString())
         }
-        
     }
-    
 }});
 
 //RESET DAILY AND TWEET
@@ -175,6 +160,22 @@ function completeMessage() {
     myConsole.log(post1, new Date().toLocaleString()) 
     return post1
 };
+
+// SLICE NO-SPACE
+function sliceNoSpace(splitMsg) {
+  let tag = splitMsg.slice(-1)[0].slice(0,-1)
+  let firstLine = message.text.split('<')[0]
+  todaySocial.push(`${firstLine.replace('&amp;', '&')}#${tag}`)
+  myConsole.log(todaySocial, new Date().toLocaleString())
+}
+
+// SLICE WITH-SPACE
+function sliceWithSpace(splitMsg) {
+  let tag = splitMsg.slice(-1)[0].slice(0,-2)
+  let firstLine = message.text.split('<')[0]
+  todaySocial.push(`${firstLine.replace('&amp;', '&')}#${tag}`)
+  myConsole.log(todaySocial, new Date().toLocaleString())
+}
 
 //DOWNLOAD IMAGE
 
