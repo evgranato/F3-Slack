@@ -31,6 +31,7 @@ const T = new Twit({
 let todaySocial = []
 let post = ''
 let files = []
+let endSpace = /\s$/
 
 //TWEET TEXT AND PHOTOS
 function tweet(files, todaySocial) {
@@ -92,16 +93,25 @@ function tweet(files, todaySocial) {
 //CONNECT SLACK AND MESSAGE
 app.message(/PAX/, async ({message, say}) =>
 {await say(`Thanks <@${message.user}>! I'll add that to today's social media content`)
+  console.log(message.text)
 if ("undefined" === typeof (message.files)) {
   if(message.text.search('<#') === -1) {
     todaySocial.push(message.text)
     myConsole.log(todaySocial, new Date().toLocaleString())
   } else {
     let splitMsg = message.text.split("ao-")
-    let tag = splitMsg.slice(-1)[0].slice(0,-1)
-    let firstLine = message.text.split('<')[0]
-    todaySocial.push(`${firstLine.replace('&amp;', '&')}#${tag}`)
-    myConsole.log(todaySocial, new Date().toLocaleString())
+    if(endSpace.test(splitMsg) === true) {
+      let tag = splitMsg.slice(-1)[0].slice(0,-2)
+      let firstLine = message.text.split('<')[0]
+      todaySocial.push(`${firstLine.replace('&amp;', '&')}#${tag}`)
+      myConsole.log(todaySocial, new Date().toLocaleString())
+    } else {
+      let tag = splitMsg.slice(-1)[0].slice(0,-1)
+      let firstLine = message.text.split('<')[0]
+      todaySocial.push(`${firstLine.replace('&amp;', '&')}#${tag}`)
+      myConsole.log(todaySocial, new Date().toLocaleString())
+    }
+    
   }
 } else {
     if(message.text.search('<#') === -1) {
@@ -115,16 +125,30 @@ if ("undefined" === typeof (message.files)) {
         myConsole.log(files, new Date().toLocaleString())
     } else {
         let splitMsg = message.text.split("ao-")
-        let tag = splitMsg.slice(-1)[0].slice(0,-1)
-        let firstLine = message.text.split('<')[0]
-        todaySocial.push(`${firstLine.replace('&amp;', '&')}#${tag}`)
-        myConsole.log(todaySocial, new Date().toLocaleString())
-        let url = message.files[0].url_private
-        let filePath = 'pics/' + Math.random() + '.jpeg'
-        pDownload(url, filePath)
-        files.push(filePath)
-        myConsole.log(filePath, new Date().toLocaleString())
-        myConsole.log(files, new Date().toLocaleString())
+        if(endSpace.test(splitMsg) === true) {
+          let tag = splitMsg.slice(-1)[0].slice(0,-2)
+          let firstLine = message.text.split('<')[0]
+          todaySocial.push(`${firstLine.replace('&amp;', '&')}#${tag}`)
+          myConsole.log(todaySocial, new Date().toLocaleString())
+          let url = message.files[0].url_private
+          let filePath = 'pics/' + Math.random() + '.jpeg'
+          pDownload(url, filePath)
+          files.push(filePath)
+          myConsole.log(filePath, new Date().toLocaleString())
+          myConsole.log(files, new Date().toLocaleString())
+        } else {
+            let tag = splitMsg.slice(-1)[0].slice(0,-1)
+            let firstLine = message.text.split('<')[0]
+            todaySocial.push(`${firstLine.replace('&amp;', '&')}#${tag}`)
+            myConsole.log(todaySocial, new Date().toLocaleString())
+            let url = message.files[0].url_private
+            let filePath = 'pics/' + Math.random() + '.jpeg'
+            pDownload(url, filePath)
+            files.push(filePath)
+            myConsole.log(filePath, new Date().toLocaleString())
+            myConsole.log(files, new Date().toLocaleString())
+        }
+        
     }
     
 }});
