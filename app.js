@@ -155,12 +155,16 @@ if ("undefined" === typeof (message.files)) {
 
 //RESET DAILY AND TWEET
 setTimeout(()=> {
+  if(todaySocial.length !== 0){
     tweet(files, completeMessage());
     todaySocial = []
     post = ''
     deleteImageFiles(files)
     files = []
     myConsole.log('Daily Reset', new Date().toLocaleString())
+  } else {
+    myConsole.log('Nothing to tweet today', new Date().toLocaleString())
+  }
 }, 86400000);
 
 //PUT A FULL DAILY TWEET TOGETHER
