@@ -75,83 +75,74 @@ function tweet(files, todaySocial) {
     });
   }
 
-//FACEBOOK CONNECTION
-// FB.setAccessToken(facebookToken);
-// FB.api(
-//  '/sentifly/feed',
-//  'POST',
-//  { "message": "Testing with api" },
-//  function (response) {
-//   if (response.error) {
-//    myConsole.log('error occurred: ' + JSON.stringify(response.error))
-//    return;
-//   }
-//   myConsole.log('successfully posted to page!');
-//  }
-// );
-
-//CONNECT SLACK AND MESSAGE
-app.message(/PAX/, async ({message, say}) =>
-{await say(`Thanks <@${message.user}>! I'll add that to today's social media content`)
-  console.log(message.text)
-if ("undefined" === typeof (message.files)) {
-  if(message.text.search('<#') === -1) {
-    todaySocial.push(message.text)
-    myConsole.log(todaySocial, new Date().toLocaleString())
-  } else {
-    let splitMsg = message.text.split("ao-")
-    if(endSpace.test(splitMsg) === true) {
-      let tag = splitMsg.slice(-1)[0].slice(0,-2)
-      let firstLine = message.text.split('<')[0]
-      todaySocial.push(`${firstLine.replace('&amp;', '&')}#${tag}`)
-      myConsole.log(todaySocial, new Date().toLocaleString())
-    } else {
-      let tag = splitMsg.slice(-1)[0].slice(0,-1)
-      let firstLine = message.text.split('<')[0]
-      todaySocial.push(`${firstLine.replace('&amp;', '&')}#${tag}`)
-      myConsole.log(todaySocial, new Date().toLocaleString())
-    }
-    
-  }
-} else {
-    if(message.text.search('<#') === -1) {
-        todaySocial.push(message.text.replace('&amp;', '&'))
-        myConsole.log(todaySocial, new Date().toLocaleString())
-        let url = message.files[0].url_private
-        let filePath = 'pics/' + Math.random() + '.jpeg'
-        pDownload(url, filePath)
-        files.push(filePath)
-        myConsole.log(filePath, new Date().toLocaleString())
-        myConsole.log(files, new Date().toLocaleString())
-    } else {
-        let splitMsg = message.text.split("ao-")
-        if(endSpace.test(splitMsg) === true) {
-          let tag = splitMsg.slice(-1)[0].slice(0,-2)
-          let firstLine = message.text.split('<')[0]
-          todaySocial.push(`${firstLine.replace('&amp;', '&')}#${tag}`)
+app.message(/PAX/, async ({message, client, logger}) => {
+  console.log(message)
+  try {
+    const response = await client.reactions.add({
+      timestamp: message.ts,
+      channel: "C01B7FBQV4Y",
+      name: 'thumbsup'
+    })
+    console.log(message.text)
+    if ("undefined" === typeof (message.files)) {
+        if(message.text.search('<#') === -1) {
+          todaySocial.push(message.text)
           myConsole.log(todaySocial, new Date().toLocaleString())
-          let url = message.files[0].url_private
-          let filePath = 'pics/' + Math.random() + '.jpeg'
-          pDownload(url, filePath)
-          files.push(filePath)
-          myConsole.log(filePath, new Date().toLocaleString())
-          myConsole.log(files, new Date().toLocaleString())
         } else {
+          let splitMsg = message.text.split("ao-")
+          if(endSpace.test(splitMsg) === true) {
+            let tag = splitMsg.slice(-1)[0].slice(0,-2)
+            let firstLine = message.text.split('<')[0]
+            todaySocial.push(`${firstLine.replace('&amp;', '&')}#${tag}`)
+            myConsole.log(todaySocial, new Date().toLocaleString())
+          } else {
             let tag = splitMsg.slice(-1)[0].slice(0,-1)
             let firstLine = message.text.split('<')[0]
             todaySocial.push(`${firstLine.replace('&amp;', '&')}#${tag}`)
             myConsole.log(todaySocial, new Date().toLocaleString())
-            let url = message.files[0].url_private
-            let filePath = 'pics/' + Math.random() + '.jpeg'
-            pDownload(url, filePath)
-            files.push(filePath)
-            myConsole.log(filePath, new Date().toLocaleString())
-            myConsole.log(files, new Date().toLocaleString())
+          }
+          
         }
-        
-    }
-    
-}});
+      } else {
+          if(message.text.search('<#') === -1) {
+              todaySocial.push(message.text.replace('&amp;', '&'))
+              myConsole.log(todaySocial, new Date().toLocaleString())
+              let url = message.files[0].url_private
+              let filePath = 'pics/' + Math.random() + '.jpeg'
+              pDownload(url, filePath)
+              files.push(filePath)
+              myConsole.log(filePath, new Date().toLocaleString())
+              myConsole.log(files, new Date().toLocaleString())
+          } else {
+              let splitMsg = message.text.split("ao-")
+              if(endSpace.test(splitMsg) === true) {
+                let tag = splitMsg.slice(-1)[0].slice(0,-2)
+                let firstLine = message.text.split('<')[0]
+                todaySocial.push(`${firstLine.replace('&amp;', '&')}#${tag}`)
+                myConsole.log(todaySocial, new Date().toLocaleString())
+                let url = message.files[0].url_private
+                let filePath = 'pics/' + Math.random() + '.jpeg'
+                pDownload(url, filePath)
+                files.push(filePath)
+                myConsole.log(filePath, new Date().toLocaleString())
+                myConsole.log(files, new Date().toLocaleString())
+              } else {
+                  let tag = splitMsg.slice(-1)[0].slice(0,-1)
+                  let firstLine = message.text.split('<')[0]
+                  todaySocial.push(`${firstLine.replace('&amp;', '&')}#${tag}`)
+                  myConsole.log(todaySocial, new Date().toLocaleString())
+                  let url = message.files[0].url_private
+                  let filePath = 'pics/' + Math.random() + '.jpeg'
+                  pDownload(url, filePath)
+                  files.push(filePath)
+                  myConsole.log(filePath, new Date().toLocaleString())
+                  myConsole.log(files, new Date().toLocaleString())
+              }
+            }}}
+  catch (error) {
+    logger.error(error)
+  }
+})
 
 //RESET DAILY AND TWEET
 setTimeout(()=> {
@@ -174,7 +165,7 @@ function completeMessage() {
     }
     let post1 = post.substring(2)
     if(post1.length < 245) {
-        post1 = post1 + ' #F3NATION #AustinTx #Austin #atx #texas'
+        post1 = post1 + '. #F3NATION #AustinTx #Austin #atx #texas'
     } 
     myConsole.log(post1, new Date().toLocaleString()) 
     return post1
