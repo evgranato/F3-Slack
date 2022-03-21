@@ -125,7 +125,7 @@ if ("undefined" === typeof (message.files)) {
         myConsole.log(files, new Date().toLocaleString())
     } else {
         let splitMsg = message.text.split("ao-")
-        if(endSpace.test(splitMsg) === true) {
+        if (endSpace.test(splitMsg) === true) {
           let tag = splitMsg.slice(-1)[0].slice(0,-2)
           let firstLine = message.text.split('<')[0]
           todaySocial.push(`${firstLine.replace('&amp;', '&')}#${tag}`)
@@ -155,7 +155,7 @@ if ("undefined" === typeof (message.files)) {
 
 //RESET DAILY AND TWEET
 setTimeout(()=> {
-  if(todaySocial.length !== 0){
+  if (todaySocial && todaySocial.length !== 0) {
     tweet(files, completeMessage());
     todaySocial = []
     post = ''
