@@ -1,5 +1,4 @@
 const { App } = require('@slack/bolt');
-const channelId = 'C034SSKHQ30'
 const Twit = require("twit");
 const fs = require("fs")
 const dotenv = require("dotenv").config({path: './keys.env'});
@@ -76,14 +75,12 @@ function tweet(files, todaySocial) {
   }
 
 app.message(/PAX/, async ({message, client, logger}) => {
-  console.log(message)
   try {
     const response = await client.reactions.add({
       timestamp: message.ts,
-      channel: "C01B7FBQV4Y",
+      channel: message.channel,
       name: 'thumbsup'
     })
-    console.log(message.text)
     if ("undefined" === typeof (message.files)) {
         if(message.text.search('<#') === -1) {
           todaySocial.push(message.text)
