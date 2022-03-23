@@ -143,7 +143,7 @@ app.message(/PAX/, async ({message, client, logger}) => {
 
 //RESET DAILY AND TWEET
 setTimeout(()=> {
-  if(todaySocial.length !== 0){
+  if(todaySocial && todaySocial.length !== 0){
     tweet(files, completeMessage());
     todaySocial = []
     post = ''
