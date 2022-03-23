@@ -161,7 +161,7 @@ function completeMessage() {
         post = post + ", " + todaySocial[i]
     }
     let post1 = post.substring(2)
-    if(post1.length < 245) {
+    if(post1.length < 244) {
         post1 = post1 + '. #F3NATION #AustinTx #Austin #atx #texas'
     } 
     myConsole.log(post1, new Date().toLocaleString()) 
