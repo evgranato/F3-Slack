@@ -31,7 +31,6 @@ let todaySocial = []
 let post = ''
 let files = []
 let endSpace = /\s$/
-let timer
 
 //TWEET TEXT AND PHOTOS
 function tweet(files, todaySocial) {
@@ -143,8 +142,7 @@ app.message(/PAX/, async ({message, client, logger}) => {
 })
 
 //RESET DAILY AND TWEET
-const runTimer = () => {
-  timer = setTimeout(()=> {
+setInterval(()=> {
     if(todaySocial && todaySocial.length !== 0){
       tweet(files, completeMessage());
       todaySocial = []
@@ -152,14 +150,10 @@ const runTimer = () => {
       deleteImageFiles(files)
       files = []
       myConsole.log('Daily Reset', new Date().toLocaleString())
-      runTimer()
     } else {
       myConsole.log('Nothing to tweet today', new Date().toLocaleString())
-      runTimer()
     }
   }, 86400000)
-}
-runTimer()
 
 //PUT A FULL DAILY TWEET TOGETHER
 function completeMessage() {
