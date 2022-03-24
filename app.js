@@ -154,6 +154,7 @@ setInterval(()=> {
       myConsole.log('Nothing to tweet today', new Date().toLocaleString())
     }
   }, 86400000)
+  
 
 //PUT A FULL DAILY TWEET TOGETHER
 function completeMessage() {
