@@ -31,6 +31,7 @@ let todaySocial = []
 let post = ''
 let files = []
 let endSpace = /\s$/
+let files2 = []
 
 //TWEET TEXT AND PHOTOS
 function tweet(files, todaySocial) {
@@ -141,10 +142,18 @@ app.message(/PAX/, async ({message, client, logger}) => {
   }
 })
 
+//KEEP PHOTOS TO 4 FOR TWITTER POST SO IT WON'T CRASH
+function limitMediaToFour(files) {
+  for(let i = 0; i <= 3; i++) {
+    files2.push(files[i])
+  }
+}
+
 //RESET DAILY AND TWEET
 setInterval(()=> {
     if(todaySocial && todaySocial.length !== 0){
-      tweet(files, completeMessage());
+      limitMediaToFour(files)
+      tweet(files2, completeMessage());
       todaySocial = []
       post = ''
       deleteImageFiles(files)
