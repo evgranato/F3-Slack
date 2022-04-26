@@ -152,17 +152,27 @@ function limitMediaToFour(files) {
 //RESET DAILY AND TWEET
 setInterval(()=> {
     if(todaySocial && todaySocial.length !== 0){
-      limitMediaToFour(files)
-      tweet(files2, completeMessage());
-      todaySocial = []
-      post = ''
-      deleteImageFiles(files)
-      files = []
-      myConsole.log('Daily Reset', new Date().toLocaleString())
+      if(files.length > 4) {
+        limitMediaToFour(files)
+        tweet(files2, completeMessage());
+        todaySocial = []
+        post = ''
+        deleteImageFiles(files)
+        files = []
+        myConsole.log('Daily Reset', new Date().toLocaleString())
+      } else {
+        tweet(files, completeMessage());
+        todaySocial = []
+        post = ''
+        deleteImageFiles(files)
+        files = []
+        myConsole.log('Daily Reset', new Date().toLocaleString())
+      }
+      
     } else {
       myConsole.log('Nothing to tweet today', new Date().toLocaleString())
     }
-  }, 86400000)
+  }, 120000)
   
 
 //PUT A FULL DAILY TWEET TOGETHER
