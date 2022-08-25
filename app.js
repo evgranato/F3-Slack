@@ -172,7 +172,7 @@ setInterval(()=> {
     } else {
       myConsole.log('Nothing to tweet today', new Date().toLocaleString())
     }
-  }, 120000)
+  }, 86400000) //120000 for 2 minutes
   
 
 //PUT A FULL DAILY TWEET TOGETHER
@@ -185,7 +185,7 @@ function completeMessage() {
         post1 = post1 + '. #F3NATION #AustinTx #Austin #atx #texas'
     } 
     myConsole.log(post1, new Date().toLocaleString()) 
-    return post1
+    return post1.substring(0,279)
 };
 
 //DOWNLOAD IMAGE
